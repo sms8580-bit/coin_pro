@@ -134,7 +134,7 @@ app.get('/api/recommend', async (req, res) => {
 });
 
 // React Router fallback (Any request not starting with /api returns index.html)
-app.get('*', (req, res) => {
+app.get('/(.*)', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
