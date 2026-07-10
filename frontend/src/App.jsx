@@ -35,7 +35,7 @@ function Dashboard() {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingRec, setLoadingRec] = useState(false);
-  
+
   const chartContainerRef = useRef(null);
   const chartRef = useRef(null);
   const candlestickSeriesRef = useRef(null);
@@ -160,21 +160,21 @@ function Dashboard() {
       // Draw 15m lines
       if (analysisRes.data.first15m) {
         const { high, low } = analysisRes.data.first15m;
-        
+
         // draw line from start of chart to end
         if (chartData.length > 0) {
-           const startTime = chartData[0].time;
-           const endTime = chartData[chartData.length - 1].time;
-           
-           lineSeriesHighRef.current.setData([
-             { time: startTime, value: high },
-             { time: endTime, value: high }
-           ]);
-           
-           lineSeriesLowRef.current.setData([
-             { time: startTime, value: low },
-             { time: endTime, value: low }
-           ]);
+          const startTime = chartData[0].time;
+          const endTime = chartData[chartData.length - 1].time;
+
+          lineSeriesHighRef.current.setData([
+            { time: startTime, value: high },
+            { time: endTime, value: high }
+          ]);
+
+          lineSeriesLowRef.current.setData([
+            { time: startTime, value: low },
+            { time: endTime, value: low }
+          ]);
         }
       } else {
         lineSeriesHighRef.current.setData([]);
@@ -194,7 +194,7 @@ function Dashboard() {
         <h1>First 15m Breakout Sniper</h1>
       </header>
       <div className="dashboard-layout">
-        
+
         <aside className="sidebar">
           <div className="glass-panel">
             <h2 style={{ fontSize: '1rem', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -202,9 +202,9 @@ function Dashboard() {
             </h2>
             <div className="form-group">
               <label>코인 선택 (KRW)</label>
-              <select 
-                className="form-control" 
-                value={selectedMarket} 
+              <select
+                className="form-control"
+                value={selectedMarket}
                 onChange={e => setSelectedMarket(e.target.value)}
               >
                 {markets.map(m => (
@@ -212,15 +212,15 @@ function Dashboard() {
                 ))}
               </select>
             </div>
-            
+
             <div className="form-group">
               <label>ATR 기준 기간</label>
-              <input type="number" className="form-control" value={atrPeriod} onChange={e=>setAtrPeriod(e.target.value)} />
+              <input type="number" className="form-control" value={atrPeriod} onChange={e => setAtrPeriod(e.target.value)} />
             </div>
 
             <div className="form-group">
               <label>ATR 기준 비율 (%)</label>
-              <input type="number" className="form-control" value={atrRatio} onChange={e=>setAtrRatio(e.target.value)} />
+              <input type="number" className="form-control" value={atrRatio} onChange={e => setAtrRatio(e.target.value)} />
             </div>
 
             <button className="btn" onClick={fetchData} disabled={loading} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
@@ -245,7 +245,7 @@ function Dashboard() {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-muted)' }}>ATR (14일)</span>
-                  <strong>{analysis.atr ? analysis.atr.toLocaleString(undefined, {maximumFractionDigits:2}) : '-'} 원</strong>
+                  <strong>{analysis.atr ? analysis.atr.toLocaleString(undefined, { maximumFractionDigits: 2 }) : '-'} 원</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-muted)' }}>첫 15분봉 고가</span>
@@ -256,7 +256,7 @@ function Dashboard() {
                   <strong style={{ color: '#f59e0b' }}>{analysis.first15m?.low?.toLocaleString()} 원</strong>
                 </div>
                 <hr style={{ borderColor: 'var(--border-color)', margin: '4px 0' }} />
-                
+
                 <ConditionItem label={`충분한 변동성 (ATR ${atrRatio}%)`} value={analysis.conditions?.isVolatilityHigh} />
                 <ConditionItem label="망치형/장악형 패턴 발생" value={analysis.conditions?.isHammer || analysis.conditions?.isEngulfing} />
                 <ConditionItem label="기준선 아래 패턴" value={analysis.conditions?.belowBaseline} />
@@ -264,7 +264,7 @@ function Dashboard() {
                 <ConditionItem label="하이킨아시 추세전환" value={analysis.conditions?.haOk} />
                 <ConditionItem label="5선/75선 골든크로스" value={analysis.conditions?.goldenCross} />
                 <ConditionItem label="90분 내 돌파 (매수 조건)" value={analysis.conditions?.breakout} />
-                
+
                 <div style={{ marginTop: '12px', padding: '12px', background: analysis.signal ? 'rgba(16, 185, 129, 0.1)' : 'rgba(15, 23, 42, 0.5)', borderRadius: '6px', textAlign: 'center', border: `1px solid ${analysis.signal ? 'var(--success)' : 'var(--border-color)'}` }}>
                   <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px' }}>최종 신호</span>
                   <strong style={{ fontSize: '1.25rem', color: analysis.signal ? 'var(--success)' : 'var(--text-muted)' }}>
@@ -284,15 +284,15 @@ function Dashboard() {
               <Activity size={18} /> 실시간 5분봉 차트 (15분봉 기준선 표시)
             </h2>
             <div style={{ display: 'flex', gap: '12px', fontSize: '0.75rem' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><div style={{width: 10, height: 10, background: '#10b981', borderRadius: '50%'}}></div> 고가 저항선</span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><div style={{width: 10, height: 10, background: '#f59e0b', borderRadius: '50%'}}></div> 저가 지지선</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><div style={{ width: 10, height: 10, background: '#10b981', borderRadius: '50%' }}></div> 고가 저항선</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><div style={{ width: 10, height: 10, background: '#f59e0b', borderRadius: '50%' }}></div> 저가 지지선</span>
             </div>
           </div>
           <div className="chart-container" ref={chartContainerRef}></div>
         </main>
 
         <section className="history-area glass-panel" style={{ display: 'flex', gap: '16px' }}>
-          
+
           <div style={{ flex: 1, overflowY: 'auto' }}>
             <h2 style={{ fontSize: '1rem', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Activity size={18} /> 실시간 추천 코인 Top 5
@@ -314,12 +314,12 @@ function Dashboard() {
                   </tr>
                 ) : (
                   recommendations.map((r, i) => (
-                    <tr key={i} style={{cursor: 'pointer'}} onClick={() => setSelectedMarket(r.market)}>
-                      <td><strong>{r.name}</strong><br/><span style={{fontSize: '0.75rem', color: 'var(--text-muted)'}}>{r.market}</span></td>
-                      <td style={{color: 'var(--text-main)'}}>{r.currentPrice.toLocaleString()}</td>
-                      <td style={{color: 'var(--success)'}}>{Math.round(r.target1).toLocaleString()}</td>
-                      <td style={{color: '#f59e0b'}}>{Math.round(r.target2).toLocaleString()}</td>
-                      <td style={{color: 'var(--danger)'}}>{Math.round(r.target3).toLocaleString()}</td>
+                    <tr key={i} style={{ cursor: 'pointer' }} onClick={() => setSelectedMarket(r.market)}>
+                      <td><strong>{r.name}</strong><br /><span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{r.market}</span></td>
+                      <td style={{ color: 'var(--text-main)' }}>{r.currentPrice.toLocaleString()}</td>
+                      <td style={{ color: 'var(--success)' }}>{Math.round(r.target1).toLocaleString()}</td>
+                      <td style={{ color: '#f59e0b' }}>{Math.round(r.target2).toLocaleString()}</td>
+                      <td style={{ color: 'var(--danger)' }}>{Math.round(r.target3).toLocaleString()}</td>
                     </tr>
                   ))
                 )}
@@ -374,7 +374,7 @@ function ConditionItem({ label, value }) {
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <span style={{ color: 'var(--text-muted)' }}>{label}</span>
       {value === undefined ? (
-         <span className="badge neutral">-</span>
+        <span className="badge neutral">-</span>
       ) : value ? (
         <span className="badge success">충족</span>
       ) : (

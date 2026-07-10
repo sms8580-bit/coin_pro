@@ -69,7 +69,9 @@ body {
   letter-spacing: 0.5px;
   background: linear-gradient(90deg, #60a5fa, #a78bfa);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .sidebar {
