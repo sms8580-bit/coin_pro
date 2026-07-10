@@ -30,6 +30,7 @@ class ErrorBoundary extends React.Component {
 function Dashboard() {
   const [markets, setMarkets] = useState([]);
   const [selectedMarket, setSelectedMarket] = useState('KRW-BTC');
+  const [marketSearch, setMarketSearch] = useState('');
   const [analysis, setAnalysis] = useState(null);
   const [history, setHistory] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
@@ -201,13 +202,24 @@ function Dashboard() {
               <Settings size={18} /> 종목 및 설정
             </h2>
             <div className="form-group">
-              <label>코인 선택 (KRW)</label>
+              <label>코인 선택 및 검색 (KRW)</label>
+              <input 
+                type="text" 
+                className="form-control" 
+                placeholder="🔍 코인명 검색 (예: 리플)" 
+                value={marketSearch}
+                onChange={e => setMarketSearch(e.target.value)}
+                style={{ marginBottom: '8px' }}
+              />
               <select
                 className="form-control"
                 value={selectedMarket}
                 onChange={e => setSelectedMarket(e.target.value)}
               >
-                {markets.map(m => (
+                {markets.filter(m => 
+                  m.korean_name.includes(marketSearch) || 
+                  m.market.toLowerCase().includes(marketSearch.toLowerCase())
+                ).map(m => (
                   <option key={m.market} value={m.market}>{m.korean_name} ({m.market})</option>
                 ))}
               </select>
